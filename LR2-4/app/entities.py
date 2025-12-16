@@ -1,13 +1,20 @@
 from datetime import datetime
 
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, Column, Uuid
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Mapped, relationship
-from sqlalchemy.testing.schema import mapped_column
+from sqlalchemy.testing.schema import mapped_column, Table
 
 import uuid
 
 Base = declarative_base()
+
+order_product = Table(
+    'order_product',
+    Base.metadata,
+    Column('order_id', Uuid, ForeignKey('orders.id'), primary_key=True),
+    Column('product_id', Uuid, ForeignKey('products.id'), primary_key=True),
+)
 
 class User(Base):
     __tablename__ = 'users'
@@ -56,11 +63,12 @@ class Product(Base):
     )
     name: Mapped[str] = mapped_column(nullable=False)
     price: Mapped[float] = mapped_column(nullable=False)
+    count: Mapped[int] = mapped_column(nullable=False, default=0)
 
     created_at: Mapped[datetime] = mapped_column(default=datetime.now)
     updated_at: Mapped[datetime] = mapped_column(default=datetime.now, onupdate=datetime.now)
 
-    orders = relationship("Order", back_populates="product")
+    orders = relationship("Order", secondary=order_product, back_populates="products")
 
 class Order(Base):
     __tablename__ = 'orders'
@@ -78,4 +86,4 @@ class Order(Base):
 
     user = relationship("User", back_populates="orders")
     address = relationship("Address", back_populates="orders")
-    product = relationship("Product", back_populates="orders")
+    products = relationship("Product", secondary=order_product, back_populates="orders")

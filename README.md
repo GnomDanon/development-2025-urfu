@@ -3,7 +3,7 @@
 ## Запуск приложения
 
 ```bash
-cd LR2-3/app
+cd LR2-4/app
 ```
 
 ```bash

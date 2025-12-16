@@ -48,7 +48,7 @@ class UserRepository:
         user = result.scalar_one_or_none()
 
         if not user:
-            raise ValueError(f"Пользователь с ID {user_id} не найден")
+            raise ValueError(f"User {user_id} not found")
 
         update_data = user_data.model_dump(exclude_unset=True)
         for key, value in update_data.items():
