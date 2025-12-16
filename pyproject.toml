@@ -1,0 +1,22 @@
+[tool.isort]
+profile = "black"
+known_first_party = ["LR2-4/app/src"]
+skip = []
+
+[tool.black]
+line-length = 88
+target-version = ['py313']
+exclude = '''
+/(
+  \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | venv
+  | build
+  | buck-out
+  | docker
+  | config
+  | temp
+)/
+'''

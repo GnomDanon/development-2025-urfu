@@ -1,0 +1,11 @@
+litestar
+asyncpg
+pydantic
+sqlalchemy
+pytest
+pytest_asyncio
+uvicorn
+pre-commit
+pylint
+black
+isort
